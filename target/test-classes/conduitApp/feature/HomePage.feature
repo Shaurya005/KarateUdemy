@@ -7,8 +7,7 @@ Feature: Tests for the home page
 # Before Each method defined in the feature file as a Background keyword.
 
 Background: Define URL
-    Given url 'https://api.realworld.io/api/'
-
+    Given url apiUrl
 
 @dibba @skipme
     Scenario: Get all tags
