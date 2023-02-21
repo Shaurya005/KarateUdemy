@@ -10,10 +10,10 @@ Background: Define URL
     # # So in karate you can paste the JSON directly, but you have to inline this json otherwise it will not recognize this object right now.
     # When method Post
     # Then status 200
-    # In karate, to define variables we can use * def and then name of variable.
+    # # In karate, to define variables we can use * def and then name of variable.
     # * def token = response.user.token 
     # * def tokenResponse = callonce read('classpath:helpers/CreateToken.feature')
-    # This token variable tokenResponse is an object which will hold all variables that were defined in CreateToken.feature
+    # # This token variable tokenResponse is an object which will hold all variables that were defined in CreateToken.feature
     # * def token = tokenResponse.authToken
     
 @ignore
@@ -31,7 +31,7 @@ Scenario: Create and delete article
 
     # Given header Authorization = 'Token ' + token
     Given path 'articles'
-    And request { "article": { "tagList": [], "title": "Delete Article", "description": "Hola Amigo", "body": "6721" } }
+    And request { "article": { "tagList": [], "title": "Deletefnnf Article", "description": "Hola Amigo", "body": "6721" } }
     When method Post
     Then status 200
     * def articleId = response.article.slug

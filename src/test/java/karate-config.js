@@ -24,16 +24,16 @@ function fn() {
   karate.configure('headers', {Authorization: 'Token ' + accessToken})
 
   return config;
+  
+  // Environment variables are certain variables that are global for the framework, and you can use them across the entire framework and reuse them.
+  // For example, we have currently 3 feature files - HomePage, Articles and CreateToken, and in all 3 files we pretty much copy pasting url to run our tests.
+  // But if, for example, you need to run your tests in different environment, for example, in dev environment or qa environment, so you will need to go and change this url in all three files.
+  // So this is not very convenient or you have a multiple login accounts. For example, one email account can be used for one environment, another account for another one, and you have to go and change that across the features.
+  // So you want to have one place where you will manage all these kind of variables in Karate, this place is this file karate-config.js. So this file is a JavaScript file created to manage environment variables.
+
+  // So let's go through this file and quickly review it one by one, line by line.
+  // So in the very beginning, this var karate environment variable is just you're getting that environment variable if it was passed during the execution of the command, then we just print to the console.
+  // So you will see in the console later in the logs, what environment did you use and then you define environment in if block. If no environment was provided then our default environment will be development environment.
+  // Then we have these config object and this config object you can use to save here some default environment variables or environment variables that are reusable across the environment.
+  // And in the last if section you can configure what variables for which environment, variables to use. And then we return a config object that is visible for every feature file. And all values of this feature file are visible.
 }
-
-// Environment variables are certain variables that are global for the framework, and you can use them across the entire framework and reuse them.
-// For example, we have currently 3 feature files - HomePage, Articles and CreateToken, and in all 3 files we pretty much copy pasting url to run our tests.
-// But if, for example, you need to run your tests in different environment, for example, in dev environment or qa environment, so you will need to go and change this url in all three files.
-// So this is not very convenient or you have a multiple login accounts. For example, one email account can be used for one environment, another account for another one, and you have to go and change that across the features.
-// So you want to have one place where you will manage all these kind of variables in Karate, this place is this file karate-config.js. So this file is a JavaScript file created to manage environment variables.
-
-// So let's go through this file and quickly review it one by one, line by line.
-// So in the very beginning, this var karate environment variable is just you're getting that environment variable if it was passed during the execution of the command, then we just print to the console.
-// So you will see in the console later in the logs, what environment did you use and then you define environment in if block. If no environment was provided then our default environment will be development environment.
-// Then we have these config object and this config object you can use to save here some default environment variables or environment variables that are reusable across the environment.
-// And in the last if section you can configure what variables for which environment, variables to use. And then we return a config object that is visible for every feature file. And all values of this feature file are visible.

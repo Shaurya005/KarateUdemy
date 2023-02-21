@@ -1,5 +1,5 @@
 # Each feature file always starts with a keyword feature and you provide the description.
-#@debug
+# @debug
 Feature: Tests for the home page
 
 # We have a duplication, actually, so we have test number 1 and test number 2, we have defined the same exact URL. 
@@ -9,19 +9,24 @@ Feature: Tests for the home page
 Background: Define URL
     Given url apiUrl
 
-@dibba @skipme
+    @dibba @skipme
     Scenario: Get all tags
         # Given url 'https://api.realworld.io/api/'
         Given path 'tags'
         When method Get
         Then status 200
         And match response.tags contains ['introduction', 'et']
+        And match response.tags contains any ['fish', 'dog', 'et']
+        # And match response.tags !contains any ['fish', 'dog']
         And match response.tags !contains 'et1'
+        # And match response.tags contains only []
         And match response.tags == "#array"
         And match each response.tags == "#string"
     
     @article
     Scenario: Get 10 articles from the page
+        * def timeValidator = read('classpath:helpers/time-validator.js')
+
         #Given url 'https://conduit.productionready.io/api/articles?limit=10&offset=0'// But the approach of putting the parameters inside of the URL, it's actually not a good thing. You have to separate your parameters from your URL.
         # Given param limit = 10
         # Given param limit = 0
@@ -33,6 +38,40 @@ Background: Define URL
         Then status 200
         And match response.articles == '#[10]'
         And match response.articlesCount == 197
+        And match response.articlesCount != 500
+        And match response == {"articles": "#array", "articlesCount": 197}
+        And match response.articles[0].createdAt contains '2022'
+        And match response.articles[*].favoritesCount contains 21
+        And match response.articles[*].author.bio contains null
+        And match response..bio contains null
+        And match each response..following == false
+        And match each response..following == '#boolean'
+        And match each response..favoritesCount == '#number'
+        And match each response..bio == '##string'
+        And match each response.articles == 
+        """
+            {
+                "slug": "#string",
+                "title": "#string",
+                "description": "#string",
+                "body": "#string",
+                "tagList": "#array",
+                "createdAt":  "#? timeValidator(_)",
+                "updatedAt": "#? timeValidator(_)",
+                "favorited": "#boolean",
+                "favoritesCount": "#number",
+                "author": {
+                    "username": "#string",
+                    "bio": "##string",
+                    "image": "#string",
+                    "following": "#boolean"
+                }
+            }
+        """
+
+        # So we want to get this biography and match each response = string, but that would be if we expecting a string there for sure, but if we use a double hash sign,
+        # it means that acceptable value be null or string, also double hash sign means that bio key is optional.
+        # For example, if our response will not have the bio key, the assertion will not fail as well. This is how a double hash sign works.
 
 
 # And also a big difference between Path and url. When you define the URL, it will be valid all the time during the execution of the scenario.
