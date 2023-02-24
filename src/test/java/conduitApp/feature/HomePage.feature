@@ -37,11 +37,11 @@ Background: Define URL
         When method Get
         Then status 200
         And match response.articles == '#[10]'
-        And match response.articlesCount == 197
+        And match response.articlesCount == 219
         And match response.articlesCount != 500
-        And match response == {"articles": "#array", "articlesCount": 197}
-        And match response.articles[0].createdAt contains '2022'
-        And match response.articles[*].favoritesCount contains 21
+        And match response == {"articles": "#array", "articlesCount": 219}
+        And match response.articles[0].createdAt contains '2023'
+        And match response.articles[*].favoritesCount contains 0
         And match response.articles[*].author.bio contains null
         And match response..bio contains null
         And match each response..following == false

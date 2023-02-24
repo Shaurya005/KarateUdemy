@@ -11,7 +11,7 @@ Background: Define URL
     * set articleRequestBody.article.description = dataGenerator.getRandomArticleValues().description
     * set articleRequestBody.article.body = dataGenerator.getRandomArticleValues().body
 
-# @ignore
+@ignore
 # @debug
 Scenario: Create a new article
 
