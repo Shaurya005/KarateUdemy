@@ -1,4 +1,13 @@
+# But let's say you have a situation when you don't want to run your tests in parallel. For example, you have a scenarios that you want to be executed in the certain order. 
+# In this case, for this particular feature, let's say SignUp.feature, we want to be executed sequentially, not in parallel. In this case, in Karate, you can use a tag call parallel and provide the value false.
+
+# And this parallel false flag also would work just separately for the "Scenario Outline". So let me remove it from top and let's say that you want to execute your Scenario Outline not in parallel so put @parellel=false.
+# And you don't want bottom rows to be executed randomly. You want them to be executed sequentially one by one. Sometimes it may be needed in the execution scenario. Let's say you are completely 
+# fine to run all other features in parallel, but for the scenario outline, you want karate to pick the values for the testing one by one from the table. In this case, @parallel=false would work as well.
+
+
 # @ignore
+# @parallel=false
 Feature: Sign Up new user
 
 Background: Preconditions

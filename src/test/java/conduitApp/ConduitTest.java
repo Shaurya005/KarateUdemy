@@ -17,6 +17,10 @@ class ConduitTest {
         assertEquals(0, results.getFailCount(), results.getErrorMessages());
     }
 
+    // Let's quickly summarize what we discussed in this lesson. So if you want to set up the thread count for the parallel execution, you can easily set this value here in the Karate Runner.
+    // But please make sure that you are not overloading your system and not stressing your system so your test are fast enough.
+    // If you want to avoid a certain parallel execution for the scenarios or the scenarios outline, you can use the flag @parallel=false and karate will not run this particular feature or scenario outline in parallel.
+
     // @Karate.Test
     // Karate tesTags() {
     //     return Karate.run().relativeTo(getClass());
