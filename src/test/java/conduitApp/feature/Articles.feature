@@ -2,7 +2,7 @@
 Feature: Articles
 
 # Background is executed everytime when we run a scenario. It's kind of BeforeEach method. So if we have multiple scenarios in this feature then for all it'll run for every scenario and CreateToken will also be executed everytime as well but that's not we want. We can reuse the token again and again. And for that we can use callonce instead of call. 
-# So during the first scenario, these feature will be called and valy will be saved in the token response. And then when we call second time another scenario, Garraty will read cash value and will not make a call to the token feature.
+# So during the first scenario, these feature will be called and valy will be saved in the token response. And then when we call second time another scenario, karate will read cache value and will not make a call to the token feature.
 Background: Define URL
     * url apiUrl
     * def articleRequestBody = read('classpath:conduitApp/json/newArticleRequest.json')

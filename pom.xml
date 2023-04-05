@@ -66,7 +66,7 @@
                     <argLine>-Dfile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>          
-        </plugins>        
+        </plugins>
     </build>       
     
 </project>

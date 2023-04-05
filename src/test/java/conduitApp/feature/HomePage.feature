@@ -68,12 +68,63 @@ Background: Define URL
                 }
             }
         """
+    
+    @condition
+    Scenario: Conditional Logic
+
+        Given params { limit: 10, offset: 0 }
+        Given path 'articles'
+        When method Get
+        Then status 200
+        * def favoritesCount = response.articles[0].favoritesCount
+        * def article = response.articles[0]
+
+        # * if (favoritesCount == 0) karate.call('classpath:helpers/AddLikes.feature', article)
+        * def result = favoritesCount == 0 ? karate.call('classpath:helpers/AddLikes.feature', article).likesCount : favoritesCount
+
+        Given params {limit: 10, offset: 0}
+        Given path 'articles'
+        When method Get
+        Then status 200
+        And match response.articles[0].favoritesCount == result
+
+    @retry
+    Scenario: Retry call
+        * configure retry = { count: 10, interval: 5000}
+        Given params {limit: 10, offset: 0}
+        Given path 'articles'
+        And retry until response.articles[0].favoritesCount == 1
+        When method Get
+        Then status 200
+
+    @sleep
+    Scenario: Sleep call
+        * def sleep = function(pause){ java.lang.Thread.sleep(pause) }
+        Given params {limit: 10, offset: 0}
+        Given path 'articles'
+        When method Get
+        * eval sleep(10000)
+        Then status 200
+
+    @type
+    Scenario: Number to String
+        * def foo = 10
+        * def json = {"bar" : #(foo+'')}
+        * match json == {"bar" :'10'}
+
+        # String to Number
+        * def foo = '10'
+        * def json = {"bar" : #(foo*1)}
+        * def json2 = {"bar" : #(~~parseInt(foo))}
+        * match json == {"bar" : 10}
+        * match json2 == {"bar" : 10}
+
 
         # So we want to get this biography and match each response = string, but that would be if we expecting a string there for sure, but if we use a double hash sign,
         # it means that acceptable value be null or string, also double hash sign means that bio key is optional.
         # For example, if our response will not have the bio key, the assertion will not fail as well. This is how a double hash sign works.
 
 
-# And also a big difference between Path and url. When you define the URL, it will be valid all the time during the execution of the scenario.
-# For example, if after one request, in the same scenario, you will try to make the second request, the url will be defined as previous one.
-# The lifetime of the path is only during the test. So once you make that call to the path, it expires right after the call. So that's the difference.
+    # And also a big difference between Path and url. When you define the URL, it will be valid all the time during the execution of the scenario.
+    # For example, if after one request, in the same scenario, you will try to make the second request, the url will be defined as previous one.
+    # The lifetime of the path is only during the test. So once you make that call to the path, it expires right after the call. So that's the difference.
